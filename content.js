@@ -7,13 +7,25 @@ for (var i = 0; i < paragraphs.length; i++) {
 
 }
 
+let Docheight = document.documentElement.clientHeight
+let allHeights = paragraphsList.map(text => text.length)
+const totalLengthsReducer = (totalHeights, currentHeight) => totalHeights + currentHeight;
+let totalHeights = allHeights.reduce(totalLengthsReducer)
+let ratio = Docheight / totalHeights
+
+
+
 // source for random coloring https://stackoverflow.com/questions/13563471/random-colors-for-circles-in-d3-js-graph/13563700
 d3
-    .select(".indexer")
+    .select("body")
+    .append('div')
     .styles({
-        "position": "static",
-        "display": "block"
+        "z-index": "1000",
+        "position": "fixed",
+        "top": "0",
+        "right": "0"
     })
+    .selectAll('div')
     .data(paragraphsList)
     .enter()
     .append('div')
@@ -21,7 +33,7 @@ d3
     .styles({
         "background-color": function () {
             return "hsl(" + Math.random() * 360 + ",100%,50%)";
-        }, "width": "50px", "height": d => (d.length) / 20 + "px"
+        }, "width": "50px", "height": d => (d.length) * ratio + "px"
     })
     .on('mouseover', function (d) {
 
@@ -33,7 +45,7 @@ d3
             .styles({
                 "position": "absolute",
                 "font-size": "12px",
-                "margin-left": "60px",
+                "right": "60px",
                 "background-color": "#ccc",
                 "border-radius": "15px",
                 "padding": "5px",

@@ -17,8 +17,7 @@
         ],
         "js" : [
             "D3/package/dist/d3.js", "D3/d3-selection-multi/d3-selection-multi.min.js", "content.js"
-        ],
-        "run_at": "document_end"
+        ]
     }
 ],
 "options_page": "options.html"

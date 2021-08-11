@@ -1,17 +1,11 @@
 {
-  "name": "LightIt",
-  "description": "Highlight interesting stuff!",
+  "name": "D3-Graph",
+  "description": "A D3.js Graph to highlight web page parts",
   "version": "1.0",
   "manifest_version": 3,
   "permissions": ["storage", "activeTab", "scripting", "contextMenus", "tabs", "notifications", "background"],
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "icon16.png",
-      "32": "icon32.png",
-      "48": "icon48.png",
-      "128": "icon128.png"
-    }
+    "default_popup": "popup.html"
   },
   "background": {
     "service_worker": "background.js"
@@ -22,16 +16,10 @@
             "<all_urls>"
         ],
         "js" : [
-            "content.js"
+            "D3/package/dist/d3.js", "D3/d3-selection-multi/d3-selection-multi.min.js", "content.js"
         ],
         "run_at": "document_end"
     }
 ],
-"options_page": "options.html",
-  "default_icon": {
-      "16": "icon16.png",
-      "32": "icon32.png",
-      "48": "icon48.png",
-      "128": "icon128.png"
-    }
+"options_page": "options.html"
 }

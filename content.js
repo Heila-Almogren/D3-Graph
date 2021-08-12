@@ -1,19 +1,13 @@
 
-let paragraphsList = []
+let emojisList = ["⭐", "👁️", "📌", "✏️", "📆"]
 
-var paragraphs = document.getElementsByTagName("p");
-for (var i = 0; i < paragraphs.length; i++) {
-    paragraphsList[i] = paragraphs.item(i).textContent;
 
-}
 
 let Docheight = document.documentElement.clientHeight
-let allHeights = paragraphsList.map(text => text.length)
-const totalLengthsReducer = (totalHeights, currentHeight) => totalHeights + currentHeight;
-let totalHeights = allHeights.reduce(totalLengthsReducer)
-let ratio = Docheight / totalHeights
-
-
+// let allHeights = paragraphsList.map(text => text.length)
+// const totalLengthsReducer = (totalHeights, currentHeight) => totalHeights + currentHeight;
+// let totalHeights = allHeights.reduce(totalLengthsReducer)
+// let ratio = Docheight / totalHeights
 
 // source for random coloring https://stackoverflow.com/questions/13563471/random-colors-for-circles-in-d3-js-graph/13563700
 d3
@@ -26,33 +20,12 @@ d3
         "right": "0"
     })
     .selectAll('div')
-    .data(paragraphsList)
+    .data(emojisList)
     .enter()
     .append('div')
-
+    .text(d => d)
     .styles({
-        "background-color": function () {
-            return "hsl(" + Math.random() * 360 + ",100%,50%)";
-        }, "width": "50px", "height": d => (d.length) * ratio + "px"
-    })
-    .on('mouseover', function (d) {
-
-
-        d3
-            .select(this)
-            .append('div')
-            .text(d => d.substring(0, 15) + "..")
-            .styles({
-                "position": "absolute",
-                "font-size": "12px",
-                "right": "60px",
-                "background-color": "#ccc",
-                "border-radius": "15px",
-                "padding": "5px",
-                "font-weight": "200"
-
-            })
-    })
-    .on('mouseout', function (d) {
-        d3.select(this).selectAll("*").remove()
+        "width": "20px",
+        "height": (Docheight / emojisList.length) + "px",
+        "cursor": "pointer"
     })

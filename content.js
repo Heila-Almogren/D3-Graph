@@ -2,16 +2,50 @@
 let paragraphsList = []
 
 var paragraphs = document.getElementsByTagName("p");
-for (var i = 0; i < paragraphs.length; i++) {
-    paragraphsList[i] = paragraphs.item(i).textContent;
 
+let len = paragraphs.length
+for (var i = 0; i < len; i++) {
+    paragraphsList[i] = {
+        "tooltip": paragraphs.item(i).textContent,
+        "annotations": []
+    }
 }
 
+// random annotations
+paragraphsList[5]["annotations"] = [
+    {
+        "annotation": "random thought",
+        "emoji": "🤔"
+    },
+    {
+        "annotation": "random thought",
+        "emoji": "😲"
+    }
+]
+
+paragraphsList[12]["annotations"] = [
+
+    {
+        "annotation": "random thought",
+        "emoji": "💡"
+    }
+]
+
+paragraphsList[22]["annotations"] = [
+
+    {
+        "annotation": "random thought",
+        "emoji": "👌"
+    }
+]
+
+
 let Docheight = document.documentElement.clientHeight
-let allHeights = paragraphsList.map(text => text.length)
+let allHeights = paragraphsList.map(item => item["tooltip"].length)
 const totalLengthsReducer = (totalHeights, currentHeight) => totalHeights + currentHeight;
 let totalHeights = allHeights.reduce(totalLengthsReducer)
 let ratio = Docheight / totalHeights
+// let emojisList = ["⭐", "👁️", "📌", "✏️", "📆"]
 
 
 
@@ -35,7 +69,10 @@ d3
             return "hsl(" + 360 * Math.random() + ',' +
                 (25 + 70 * Math.random()) + '%,' +
                 (85 + 10 * Math.random()) + '%)';
-        }, "width": "50px", "height": d => (d.length) * ratio + "px"
+        }, "width": "25px", "height": d => {
+
+            return parseInt((JSON.stringify(d["tooltip"])).length) * ratio + "px"
+        }
     })
     .on('mouseover', function (d) {
 
@@ -43,7 +80,8 @@ d3
         d3
             .select(this)
             .append('div')
-            .text(d => d.substring(0, 15) + "..")
+            .classed("tooltip", true)
+            .text(d => d["tooltip"].substring(0, 15) + "..")
             .styles({
                 "position": "absolute",
                 "font-size": "12px",
@@ -52,9 +90,50 @@ d3
                 "border-radius": "15px",
                 "padding": "5px",
                 "font-weight": "200"
-
             })
     })
     .on('mouseout', function (d) {
-        d3.select(this).selectAll("*").remove()
+        d3.select(this).selectAll(".tooltip").remove()
     })
+    .on('click', function () {
+        window.scroll(0, 1200);
+    })
+
+    .selectAll('div')
+    .data(d => d["annotations"])
+    .enter()
+    .append('div')
+    .styles({
+        "font-size": "15px"
+    })
+    .text(d => d["emoji"])
+
+
+
+
+// d3.selectAll('p')
+//     .insert('div', ":first-child")
+//     .text(function () {
+//         return emojisList[Math.floor(Math.random() * 5)]
+//     })
+
+
+// d3
+//     .select("body")
+//     .append('div')
+//     .styles({
+//         "z-index": "1000",
+//         "position": "fixed",
+//         "top": "0",
+//         "right": "0"
+//     })
+//     .selectAll('div')
+//     .data(emojisList)
+//     .enter()
+//     .append('div')
+//     .text(d => d)
+//     .styles({
+//         "width": "20px",
+//         "height": (Docheight / emojisList.length) + "px",
+//         "cursor": "pointer"
+//     })

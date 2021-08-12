@@ -32,7 +32,9 @@ d3
 
     .styles({
         "background-color": function () {
-            return "hsl(" + Math.random() * 360 + ",100%,50%)";
+            return "hsl(" + 360 * Math.random() + ',' +
+                (25 + 70 * Math.random()) + '%,' +
+                (85 + 10 * Math.random()) + '%)';
         }, "width": "50px", "height": d => (d.length) * ratio + "px"
     })
     .on('mouseover', function (d) {

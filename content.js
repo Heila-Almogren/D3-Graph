@@ -89,7 +89,8 @@ d3
                 "background-color": "#ccc",
                 "border-radius": "15px",
                 "padding": "5px",
-                "font-weight": "200"
+                "font-weight": "200",
+                "cursor": "pointer"
             })
     })
     .on('mouseout', function (d) {
@@ -104,7 +105,9 @@ d3
     .enter()
     .append('div')
     .styles({
-        "font-size": "15px"
+        "font-size": "15px",
+        "cursor": "pointer"
+
     })
     .text(d => d["emoji"])
 
